@@ -15,6 +15,10 @@ namespace Authentication_and_Authorization.Controllers
 
         public IActionResult Index()
         {
+            if (true)
+            {
+                //code;
+            }
             return View();
         }
 
