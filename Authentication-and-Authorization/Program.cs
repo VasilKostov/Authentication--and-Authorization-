@@ -1,5 +1,6 @@
 using Authentication_and_Authorization.Models.Domain;
 using Authentication_and_Authorization.Repositories.Abstract;
+using Authentication_and_Authorization.Repositories.Implementation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +17,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 
 builder.Services.ConfigureApplicationCookie(op => op.LoginPath = "/UserAuthentication/Login");
 
-builder.Services.AddScoped<IUserAuthenticationService, IUserAuthenticationService>();
+builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
 
 var app = builder.Build();
 
