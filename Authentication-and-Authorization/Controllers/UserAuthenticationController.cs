@@ -60,21 +60,39 @@ namespace Authentication_and_Authorization.Controllers
         }
 
         //We comment the method after first registering this admin user, because we will already have one admin user.
-        
+
         //[AllowAnonymous]
         //public async Task<IActionResult> RegisterAdmin()
         //{
         //    RegistrationModel model = new RegistrationModel
         //    {
-        //        Username = "admin",
-        //        Email = "admin@gmail.com",
-        //        Name = "Admin",
-        //        Password = "Admin@12345#"
+        //        Username = "admin1",
+        //        Email = "admin1@gmail.com",
+        //        FirstName = "Vasil",
+        //        LastName = "Kostov",
+        //        Password = "Admin@123456#"
         //    };
         //    model.Role = "admin";
         //    var result = await this._authService.RegistrationAsync(model);
         //    return Ok(result);
         //}
+
+        [Authorize]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+            var result = await _authService.ChangePasswordAsync(model, User.Identity.Name);
+            TempData["msg"] = result.StatusMessage;
+            return RedirectToAction(nameof(ChangePassword));
+        }
 
     }
 }

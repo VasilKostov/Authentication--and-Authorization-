@@ -5,7 +5,9 @@ namespace Authentication_and_Authorization.Models.DTO
     public class RegistrationModel
     {
         [Required]
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }
         [Required]
         [EmailAddress]
         public string Email { get; set; }

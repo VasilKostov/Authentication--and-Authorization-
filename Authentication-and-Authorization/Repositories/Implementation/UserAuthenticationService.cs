@@ -18,6 +18,32 @@ namespace Authentication_and_Authorization.Repositories.Implementation
             this.userManager = userManager;
             this.roleManager = roleManager;
         }
+
+        public async Task<Status> ChangePasswordAsync(ChangePasswordModel model, string username)
+        {
+            var status = new Status();
+
+            var user =await userManager.FindByNameAsync(username);
+            if (user == null)
+            {
+                status.StatusMessage = "User does not exist";
+                status.StatusCode = 0;
+                return status;
+            }
+            var result = await userManager.ChangePasswordAsync(user, model.CurrentPassoword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                status.StatusMessage = "Password has updated successfully";
+                status.StatusCode = 1;
+            }
+            else
+            {
+                status.StatusMessage = "Some error occcured";
+                status.StatusCode = 0;
+            }
+            return status;
+        }
+
         public async Task<Status> LoginAsync(LoginModel model)
         {
             var status = new Status();
@@ -86,7 +112,8 @@ namespace Authentication_and_Authorization.Repositories.Implementation
             ApplicationUser user = new ApplicationUser
             {
                 SecurityStamp = Guid.NewGuid().ToString(),
-                Name = model.Name,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
                 Email = model.Email,
                 UserName = model.Username,
                 EmailConfirmed = true,

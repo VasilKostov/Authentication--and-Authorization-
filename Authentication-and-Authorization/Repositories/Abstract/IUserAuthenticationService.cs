@@ -6,6 +6,7 @@ namespace Authentication_and_Authorization.Repositories.Abstract
     {
         Task<Status> LoginAsync(LoginModel model);
         Task<Status> RegistrationAsync(RegistrationModel model);
+        Task<Status> ChangePasswordAsync(ChangePasswordModel model, string username);
         Task LogoutAsync();
     }
 }
